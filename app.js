@@ -1,13 +1,11 @@
-//import dependencies
-const inquirer = require('inquirer');
-const mysql = require('mysql2');
+//Import dependencies
+const inquirer = require("inquirer");
+const mysql = require("mysql2");
 const cTable = require('console.table');
 const db = require('./db/connection');
-const express = require('express');
 
 
-
-// Initial Prompt for Inquirer to display list of options
+// Initial Inquirer Prompt 
 function startPrompt() {
     inquirer.prompt([
     {
@@ -15,48 +13,49 @@ function startPrompt() {
     message: "What would you like to do?",
     name: "choice",
     choices: [
-              "View all Deparments",
-              "View All Roles?",
-              "View All Employees?",
+              "View ALL Deparments",
+              "View ALL Roles?",
+              "View ALL Employees?", 
               "Add Department?",
               "Add Role?",
               "Add Employee?",
-              "Update Employee"
+              "Update Employee Role",
+             
             ]
     }
 ]).then(function(val) {
         switch (val.choice) {
-            case "View all Deparments":
+            case "View ALL Deparments":
                 viewAllDepartments();
               break;
-    
-          case "View All Roles?":
+
+            case "View ALL Roles?":
               viewAllRoles();
             break;
 
-            case "View All Employees?":
-                viewAllEmployees();
-              break;
-
-              case "Add Department?":
+            case "View ALL Employees?":
+              viewAllEmployees();
+            break;
+          
+            case "Add Department?":
                 addDepartment();
               break;
 
-              case "Add Role?":
+            case "Add Role?":
                 addRole();
               break;
-         
-          case "Add Employee?":
+
+            case "Add Employee?":
                 addEmployee();
               break;
 
-          case "Update Employee":
+            case "Update Employee Role":
                 updateEmployee();
               break;
+      
+    
             }
     })
 };
-
-
 
 startPrompt();
