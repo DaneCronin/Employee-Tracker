@@ -1,31 +1,30 @@
-DROP DATABASE IF EXISTS tracker_db;
-CREATE DATABASE tracker_db;
+DROP DATABASE IF EXISTS employee_tracker_db;
+CREATE DATABASE employee_tracker_db;
+
+USE employee_tracker_db;
 
 
-USE tracker_db;
 
 CREATE TABLE department (
-   dept_id INTEGER AUTO_INCREMENT PRIMARY KEY,
-   dept_name VARCHAR(30) NOT NULL,
--- PRIMARY KEY (dept_id) 
+   id INTEGER AUTO_INCREMENT PRIMARY KEY,
+   name VARCHAR(30) NOT NULL
 );
 
-CREATE TABLE roles (
-    roles_id INTEGER AUTO_INCREMENT,
-    title VARCHAR(30) UNIQUE NOT NULL,
-    salary DECIMAL UNSIGNED NOT NULL,
-    dept_id INTEGER NOT NULL, 
-    FOREIGN KEY (dept_id) REFERENCES department(dept_id)   
-    --PRIMARY KEY roles_id
+CREATE TABLE role (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(30) NOT NULL,
+    salary DECIMAL NOT NULL,
+    deptartment_id INTEGER NOT NULL, 
+    FOREIGN KEY (deptartment_id) REFERENCES department(id)
 );
+
 
  CREATE TABLE employee (
-  emp_id INTEGER AUTO_INCREMENT ,
+  id INTEGER AUTO_INCREMENT PRIMARY KEY ,
   first_name VARCHAR(30) NOT NULL,
   last_name VARCHAR(30) NOT NULL,
-  emp_role_id INTEGER NOT NULL ,
-  manager_id INTEGER, 
-  PRIMARY KEY(emp_id),
-  FOREIGN KEY (emp_role_id) REFERENCES roles(roles_id),
-  FOREIGN KEY (manager_id) REFERENCES employee(emp_id)
+  manager_id INTEGER,
+  role_id INTEGER NOT NULL ,
+  FOREIGN KEY (role_id) REFERENCES role(id),
+  FOREIGN KEY (manager_id) REFERENCES employee(id)
 );
