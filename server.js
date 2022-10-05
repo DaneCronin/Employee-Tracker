@@ -87,6 +87,7 @@ startPrompt = () => {
     })
 };
 
+
 // View ALL departments function
 viewAllDepartments = () => {
   db.query(`SELECT * FROM department ORDER BY id ASC;`, (err, res) => {
@@ -99,6 +100,7 @@ viewAllDepartments = () => {
   });
 };
 
+
 // View ALL roles function
 viewAllRoles = () => {
   db.query(`SELECT roles.id, roles.title, roles.salary, department.name, department.id FROM roles JOIN department ON roles.department_id = department.id ORDER BY roles.id ASC;`, (err, res) => {
@@ -107,6 +109,18 @@ viewAllRoles = () => {
       startPrompt();
   })
 };
+
+
+// View ALL Employees function
+
+// viewAllEmployees = () => {
+//   db.query(`SELECT employee.first_name, employee.last_name, roles.title, roles.salary, department.name, CONCAT(e.first_name, ' ' ,e.last_name) AS Manager FROM employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id left join employee e on employee.manager_id = employee.id;`, 
+//   function(err, res) {
+//     if (err) throw err
+//     console.table(res)
+//     startPrompt()
+// })
+// };
 
 
 
@@ -128,37 +142,37 @@ viewAllRoles = () => {
 
 
 // // ADD ROLES FUNCTION
-// addRole = () => {
+addRole = () => {
 
-//   inquirer.prompt([
-//     {
-//     type: "input",
-//     message: "What would you like to call the new role?",
-//     name: "new_role"
-//   },
-//   {
-//     type: "input",
-//     name: "add_Salary",
-//     message: "What is the salary of the new role?"
-//   },
-//   {
-//     type: "list",
-//     name: "dept_Name",
-//     message: "Which department should this role be added to?",
-//     choices: [
-//       "Sales",
-//       "Engineering",
-//       "Finance",
-//       "Legal"
-//     ]
-//   },
-// ])
-//   .then((input) => {
-//     db.query('INSERT INTO roles SET ?', {name: input.new_role, name: input.add_salary, name: input.dept_name}, (err,res) => {
-//       if (err) throw err;
-//       console.log(`${input.new_role} added to the database!`);
-//       startPrompt();
-//     });
-//   });
-// }
+  inquirer.prompt([
+    {
+    type: "input",
+    message: "What would you like to call the new role?",
+    name: "new_role"
+  },
+  {
+    type: "input",
+    name: "add_Salary",
+    message: "What is the salary of the new role?"
+  },
+  {
+    type: "list",
+    name: "dept_Name",
+    message: "Which department should this role be added to?",
+    choices: [
+      "Sales",
+      "Engineering",
+      "Finance",
+      "Legal"
+    ]
+  },
+])
+  .then((input) => {
+    db.query('INSERT INTO roles SET ?', {name: input.new_role, name: input.add_salary, name: input.dept_name}, (err,res) => {
+      if (err) throw err;
+      console.log(`${input.new_role} added to the database!`);
+      startPrompt();
+    });
+  });
+};
 
