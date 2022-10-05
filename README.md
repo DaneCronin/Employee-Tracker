@@ -16,11 +16,12 @@
   ## Installation
   *Steps required to install project and how to get application running*
   
-  Clone the repo to your local machine and run npm install to install the necessary npm packages. This app will use the Inquirer, MySQL2, and ConsoleTable npm. Run MySQL and source db/db.sql then source db/schema.sql to load the database and tables. Use npm start to launch the inquirer  command line app.
-
+  Clone the repo to your local machine and run npm install to install the necessary npm packages. This app will use the Inquirer, MySQL2, and ConsoleTable npm. Run MySQL and source db/db.sql then source db/schema.sql followed by source db/seeds.sql to load the database and tables. 
 
   ## Usage
   *Instructions and examples for use:*
+  Use npm start to launch the inquirer command line app.
+
   
 
   
