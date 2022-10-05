@@ -1,62 +1,164 @@
-//import dependencies
-const inquirer = require('inquirer');
-const mysql = require('mysql2');
+//Import dependencies
+const express = require('express');
+const inquirer = require("inquirer");
+const mysql = require("mysql2");
 const cTable = require('console.table');
 const db = require('./db/connection');
-const express = require('express');
 
 
 
-// Initial Prompt for Inquirer to display list of options
-function startPrompt() {
+const PORT = process.env.PORT || 3001;
+const app = express();
+
+// Start server after DB connection
+db.connect(err => {
+  if (err) throw err;
+  console.log('Database connected.');
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+});
+
+// Call start application funtion if no error
+db.connect((err) => {
+  if (err) throw err;
+  startPrompt();
+});
+
+
+// Initial Inquirer Prompt 
+startPrompt = () => {
     inquirer.prompt([
-    {
+      {
     type: "list",
     message: "What would you like to do?",
     name: "choice",
     choices: [
-              "View all Deparments",
-              "View All Roles?",
-              "View All Employees?",
+              "View ALL Deparments",
+              "View ALL Roles?",
+              "View ALL Employees?", 
               "Add Department?",
               "Add Role?",
               "Add Employee?",
-              "Update Employee"
+              "Update Employee Role",
+              "Exit"
+             
             ]
     }
-]).then(function(val) {
-        switch (val.choice) {
-            case "View all Deparments":
+]).then((response) => {
+        switch (response.choice) {
+            case "View ALL Deparments":
                 viewAllDepartments();
               break;
-    
-          case "View All Roles?":
+
+            case "View ALL Roles?":
               viewAllRoles();
             break;
 
-            case "View All Employees?":
-                viewAllEmployees();
-              break;
-
-              case "Add Department?":
+            case "View ALL Employees?":
+              viewAllEmployees();
+            break;
+          
+            case "Add Department?":
                 addDepartment();
               break;
 
-              case "Add Role?":
+            case "Add Role?":
                 addRole();
               break;
-         
-          case "Add Employee?":
+
+            case "Add Employee?":
                 addEmployee();
               break;
 
-          case "Update Employee":
+            case "Update Employee Role":
                 updateEmployee();
               break;
+
+            case 'Exit':
+                db.end();
+                console.log('Good bye!');
+                return;
+            default:
+                break;
+      
+    
             }
     })
 };
 
+// View ALL departments function
+viewAllDepartments = () => {
+  db.query(`SELECT * FROM department ORDER BY id ASC;`, (err, res) => {
+      if (err) {
+        throw err;
+      } else {
+      console.table(res);
+      }
+        startPrompt();
+  });
+};
+
+// View ALL roles function
+viewAllRoles = () => {
+  db.query(`SELECT roles.id, roles.title, roles.salary, department.name, department.id FROM roles JOIN department ON roles.department_id = department.id ORDER BY roles.id ASC;`, (err, res) => {
+      if (err) throw err; 
+      console.table(res);
+      startPrompt();
+  })
+};
 
 
-startPrompt();
+
+// ADD DEPARTMENT FUNCTION
+ addDepartment = () => {
+
+  inquirer.prompt([{
+    type: "input",
+    message: "What would you like to call the new department?",
+    name: "new_department"
+  }])
+  .then((input) => {
+    db.query('INSERT INTO department SET ?', {name: input.new_department}, (err,res) => {
+      if (err) throw err;
+      startPrompt();
+    });
+  });
+};
+
+
+// // ADD ROLES FUNCTION
+// addRole = () => {
+
+//   inquirer.prompt([
+//     {
+//     type: "input",
+//     message: "What would you like to call the new role?",
+//     name: "new_role"
+//   },
+//   {
+//     type: "input",
+//     name: "add_Salary",
+//     message: "What is the salary of the new role?"
+//   },
+//   {
+//     type: "list",
+//     name: "dept_Name",
+//     message: "Which department should this role be added to?",
+//     choices: [
+//       "Sales",
+//       "Engineering",
+//       "Finance",
+//       "Legal"
+//     ]
+//   },
+// ])
+//   .then((input) => {
+//     db.query('INSERT INTO roles SET ?', {name: input.new_role, name: input.add_salary, name: input.dept_name}, (err,res) => {
+//       if (err) throw err;
+//       console.log(`${input.new_role} added to the database!`);
+//       startPrompt();
+//     });
+//   });
+// }
+
