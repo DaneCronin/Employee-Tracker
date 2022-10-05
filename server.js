@@ -111,4 +111,19 @@ viewAllRoles = () => {
 
 
 
+// ADD DEPARTMENT FUNCTION
+ addDepartment = () => {
+
+  inquirer.prompt([{
+    type: "input",
+    message: "What would you like to call the new department?",
+    name: "new_department"
+  }])
+  .then((input) => {
+    db.query('INSERT INTO department SET ?', {name: input.new_department}, (err,res) => {
+      if (err) throw err;
+      startPrompt();
+    });
+  });
+}
 
