@@ -1,14 +1,35 @@
 //Import dependencies
+const express = require('express');
 const inquirer = require("inquirer");
 const mysql = require("mysql2");
 const cTable = require('console.table');
 const db = require('./db/connection');
 
 
+
+const PORT = process.env.PORT || 3001;
+const app = express();
+
+// Start server after DB connection
+db.connect(err => {
+  if (err) throw err;
+  console.log('Database connected.');
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+});
+
+// Call start application funtion if no error
+db.connect((err) => {
+  if (err) throw err;
+  startPrompt();
+});
+
+
 // Initial Inquirer Prompt 
-function startPrompt() {
+startPrompt = () => {
     inquirer.prompt([
-    {
+      {
     type: "list",
     message: "What would you like to do?",
     name: "choice",
@@ -23,8 +44,8 @@ function startPrompt() {
              
             ]
     }
-]).then(function(val) {
-        switch (val.choice) {
+]).then((response) => {
+        switch (response.choice) {
             case "View ALL Deparments":
                 viewAllDepartments();
               break;
@@ -58,4 +79,28 @@ function startPrompt() {
     })
 };
 
-startPrompt();
+// View ALL departments function
+viewAllDepartments = () => {
+  db.query(`SELECT * FROM department ORDER BY id ASC;`, (err, res) => {
+      if (err) {
+        throw err;
+      } else {
+      console.table(res);
+      }
+        startPrompt();
+  });
+};
+
+// View ALL roles functioin
+viewAllRoles = () => {
+  db.query(`SELECT roles.id, roles.title, roles.salary, department.name, department.id FROM roles JOIN department ON roles.department_id = department.id ORDER BY roles.id ASC;`, (err, res) => {
+      if (err) throw err; 
+      console.table(res);
+      startPrompt();
+  })
+};
+
+
+
+
+
