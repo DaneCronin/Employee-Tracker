@@ -41,6 +41,7 @@ startPrompt = () => {
               "Add Role?",
               "Add Employee?",
               "Update Employee Role",
+              "Exit"
              
             ]
     }
@@ -73,6 +74,13 @@ startPrompt = () => {
             case "Update Employee Role":
                 updateEmployee();
               break;
+
+            case 'Exit':
+                db.end();
+                console.log('Good bye!');
+                return;
+            default:
+                break;
       
     
             }
