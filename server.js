@@ -125,5 +125,41 @@ viewAllRoles = () => {
       startPrompt();
     });
   });
+};
+
+
+// ADD ROLES FUNCTION
+addRole = () => {
+
+  inquirer.prompt([
+    {
+    type: "input",
+    message: "What would you like to call the new role?",
+    name: "new_role"
+  },
+  {
+    type: "input",
+    name: "add_Salary",
+    message: "What is the salary of the new role?"
+  },
+  {
+    type: "list",
+    name: "dept_Name",
+    message: "Which department should this role be added to?",
+    choices: [
+      "Sales",
+      "Engineering",
+      "Finance",
+      "Legal"
+    ]
+  },
+])
+  .then((input) => {
+    db.query('INSERT INTO roles SET ?', {name: input.new_role, name: input.add_salary, name: input.dept_name}, (err,res) => {
+      if (err) throw err;
+      console.log(`${input.new_role} added to the database!`);
+      startPrompt();
+    });
+  });
 }
 
