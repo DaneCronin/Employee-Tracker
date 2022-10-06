@@ -26,7 +26,7 @@
  https://drive.google.com/file/d/1H07RlyNjZHF4YWGM5kw2lTZkE7ooqyCG/view
 
 Screenshot of Application:
-Screen Shot 2022-10-05 at 9.11.23 PM<img width="1418" alt="image" src="https://user-images.githubusercontent.com/107944830/194205979-706ce454-d874-4b2d-8379-2a627236df00.png">
+<img width="1418" alt="image" src="https://user-images.githubusercontent.com/107944830/194205979-706ce454-d874-4b2d-8379-2a627236df00.png">
 
   
 
