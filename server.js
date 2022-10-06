@@ -166,7 +166,9 @@ addRole = () => {
   },
 ])
   .then((input) => {
-    db.query('INSERT INTO roles SET ?', {name: input.new_role, name: input.add_salary, name: input.dept_name}, (err,res) => {
+    db.query('INSERT INTO roles SET ?', 
+    {title: input.new_role, salary: input.add_Salary, department_id: input.dept_Name}, 
+    (err,res) => {
       if (err) throw err;
       console.log(`${input.new_role} added to the database!`);
       startPrompt();
