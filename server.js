@@ -113,14 +113,14 @@ viewAllRoles = () => {
 
 // View ALL Employees function
 
-// viewAllEmployees = () => {
-//   db.query(`SELECT employee.first_name, employee.last_name, roles.title, roles.salary, department.name, CONCAT(e.first_name, ' ' ,e.last_name) AS Manager FROM employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id left join employee e on employee.manager_id = employee.id;`, 
-//   function(err, res) {
-//     if (err) throw err
-//     console.table(res)
-//     startPrompt()
-// })
-// };
+viewAllEmployees = () => {
+  db.query(`SELECT * FROM employee`, 
+  function(err, res) {
+    if (err) throw err
+    console.table(res)
+    startPrompt()
+})
+};
 
 
 
@@ -143,6 +143,9 @@ viewAllRoles = () => {
 
 // // ADD ROLES FUNCTION
 addRole = () => {
+  db.query(`SELECT * FROM department;`, (err, res)=> {
+    if (err) throw err;
+    let departments = res.map(department => ({name: department.name, value: department.id}));
 
   inquirer.prompt([
     {
@@ -159,12 +162,7 @@ addRole = () => {
     type: "list",
     name: "dept_Name",
     message: "Which department should this role be added to?",
-    choices: [
-      "Sales",
-      "Engineering",
-      "Finance",
-      "Legal"
-    ]
+    choices: departments
   },
 ])
   .then((input) => {
@@ -174,5 +172,5 @@ addRole = () => {
       startPrompt();
     });
   });
+});
 };
-

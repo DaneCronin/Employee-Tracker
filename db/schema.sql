@@ -1,6 +1,7 @@
-DROP TABLE IF EXISTS employee;
-DROP TABLE IF EXISTS roles;
-DROP TABLE IF EXISTS department;
+DROP DATABASE IF EXISTS employee_tracker_db;
+CREATE DATABASE employee_tracker_db;
+
+USE employee_tracker_db;
 
 
 CREATE TABLE department (
@@ -24,5 +25,5 @@ CREATE TABLE roles (
   manager_id INTEGER,
   FOREIGN KEY (manager_id) REFERENCES employee(id),
   role_id INTEGER NOT NULL ,
-  CONSTRAINT fk_role FOREIGN KEY (role_id) REFERENCES roles(id),
+  CONSTRAINT fk_role FOREIGN KEY (role_id) REFERENCES roles(id)
 );
