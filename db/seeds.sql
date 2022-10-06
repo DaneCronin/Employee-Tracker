@@ -1,12 +1,12 @@
+USE employee_tracker_db;
+
 -- DEPARTMENT SEEDS --
 INSERT INTO department (name)
-VALUE ('Sales');
-INSERT INTO department (name)
-VALUE ('Engineering');
-INSERT INTO department (name)
-VALUE ('Finance');
-INSERT INTO department (name)
-VALUE ('Legal');
+VALUES ('Sales'),
+        ('Engineering'),
+        ('Finance'),
+        ('Legal');
+
 
 -- ROLE SEEDS --
 INSERT INTO roles (title, salary, department_id)
@@ -21,13 +21,13 @@ VALUES
 
 
 -- EMPLOYEE SEEDS --
--- INSERT INTO employee (first_name, last_name, manager_id, role_id)
--- VALUES 
---     ("John", "Doe", 3, 1),
---     ("Mike", "Chan", 1, 2),
---     ("Ashley", "Rodriguez", null, 3),
---     ("Kevin", "Tupik", 3, 4),
---     ("Malia", "Brown", null, 5),
---     ("Sarah", "Lourd", null, 2),
---     ("Tom", "Allen", 7, 4),
---     ("Christian", "Eckenrode", 2, 1);
+INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUES 
+    ('John', 'Doe', null, 1),
+    ('Mike', 'Chan', null, 2),
+    ('Ashley', 'Rodriguez', null, 3),
+    ('Kevin', 'Tupik', null, 4),
+    ('Malia', 'Brown', null, 5),
+    ('Sarah', 'Lourd', null, 2),
+    ('Tom', 'Allen', null, 4),
+    ('Christian', 'Eckenrode', 2, 1);
